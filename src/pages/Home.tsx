@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { memo, useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -13,7 +7,8 @@ import {
   ColDef,
   ValueFormatterParams,
 } from "ag-grid-community";
-import { Spin } from "antd";
+import { Button, Space, Spin } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 
 interface ICar {
   make: string;
@@ -21,18 +16,22 @@ interface ICar {
   price: number;
 }
 
-type MyRendererProps = {
+type CustomCellProps = {
   valueFormatted: string;
 };
 
-function MyRenderer({ valueFormatted }: MyRendererProps) {
+const CustomCell = ({ valueFormatted }: CustomCellProps) => {
   return (
     <span>
       <Spin />
       {valueFormatted}
     </span>
   );
-}
+};
+
+const DeleteButton = () => (
+  <Button danger shape="circle" icon={<CloseOutlined />} />
+);
 
 const Home = () => {
   const gridRef = useRef<AgGridReact<ICar>>(null);
@@ -42,19 +41,28 @@ const Home = () => {
     { make: "Porsche", model: "Boxster", price: 72000 },
   ]);
 
-  const [columnDefs] = useState<ColDef[]>([
-    { field: "make", sortable: true, filter: true },
-    { field: "model", sortable: true, filter: true },
-    {
-      field: "price",
-      valueFormatter: (params: ValueFormatterParams<ICar, number>) => {
-        return "£" + params.value;
+  const columnDefs = useMemo<ColDef[]>(
+    () => [
+      { field: "make", width: 350, editable: true },
+      { field: "model", width: 350, editable: true },
+      {
+        field: "price",
+        valueFormatter: (params: ValueFormatterParams<ICar, number>) => {
+          return "£" + params.value;
+        },
+        sortable: true,
+        filter: true,
+        cellRenderer: memo(CustomCell),
+        width: 300,
       },
-      sortable: true,
-      filter: true,
-      cellRenderer: MyRenderer,
-    },
-  ]);
+      {
+        field: "action",
+        width: 180,
+        cellRenderer: memo(DeleteButton),
+      },
+    ],
+    []
+  );
 
   const defaultColDef = useMemo(
     () => ({
@@ -72,16 +80,20 @@ const Home = () => {
     // gridRef.current.api.deselectAll();
   }, []);
 
-  useEffect(() => {
-    fetch("https://www.ag-grid.com/example-assets/row-data.json")
-      .then((result) => result.json())
-      .then((rowData) => setRowData(rowData));
-  }, []);
-
   return (
-    <>
-      <button onClick={buttonListener}>Push Me</button>
-      <div className="ag-theme-alpine" style={{ height: 500, width: 600 }}>
+    <Space
+      direction="vertical"
+      size="large"
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+      }}
+    >
+      {/*<button onClick={buttonListener}>Push Me</button>*/}
+      <div className="ag-theme-alpine" style={{ height: 600, width: 1200 }}>
         <AgGridReact<ICar>
           onCellClicked={cellClickedListener}
           ref={gridRef}
@@ -92,7 +104,12 @@ const Home = () => {
           rowSelection="multiple"
         />
       </div>
-    </>
+
+      <Space>
+        <Button>Validate</Button>
+        <Button type="primary">Save</Button>
+      </Space>
+    </Space>
   );
 };
 
