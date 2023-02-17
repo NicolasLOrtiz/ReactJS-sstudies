@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import "antd/dist/reset.css";
 import { Home } from "./pages";
+import { FormRegisterUser } from "./components";
 
 const App: FC = () => {
   return (
@@ -10,6 +11,7 @@ const App: FC = () => {
       <RecoilRoot>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/register-user" element={<FormRegisterUser />} />
         </Routes>
       </RecoilRoot>
     </BrowserRouter>

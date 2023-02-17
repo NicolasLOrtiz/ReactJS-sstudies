@@ -8,7 +8,6 @@ interface ISubmitFormValues {
 
 const useFormRegisterClient = () => {
   const [name, setName] = useState<string>("");
-  const [errors, setErrors] = useState<string>("");
   const nameInputRef = useRef<InputRef>(null);
   const createClient = useCreateClient();
 

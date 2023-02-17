@@ -1,1 +1,2 @@
-export { default as FormRegisterUser } from "./FormRegisterUser.ui";
+export { default as FormRegisterUser } from "./FormRegisterUser";
+export { default as useFormRegisterUser } from "./useFormRegisterUser";
