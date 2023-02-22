@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Setup test suite should be able to render a setup page 1`] = `
+<div>
+  <form>
+    <input
+      placeholder="Nome completo"
+      type="text"
+      value=""
+    />
+    <button
+      disabled=""
+    >
+      Adicionar
+    </button>
+  </form>
+  <ul />
+  <footer
+    role="contentinfo"
+  >
+    <button
+      disabled=""
+    >
+      Sortear cliente
+    </button>
+  </footer>
+</div>
+`;
