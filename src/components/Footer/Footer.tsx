@@ -1,13 +1,15 @@
 import React, { useCallback } from "react";
-import { useListUsers } from "../../state/hooks";
+import { useListUsers, useRaffle } from "../../state/hooks";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const users = useListUsers();
   const navigate = useNavigate();
+  const raffle = useRaffle();
   const buttonDisabled = users.length < 3;
 
   const handleSort = useCallback(() => {
+    raffle();
     navigate("/sorteio");
   }, [navigate]);
 

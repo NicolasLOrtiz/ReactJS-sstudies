@@ -4,11 +4,13 @@ import { Footer } from "./index";
 import { RecoilRoot } from "recoil";
 import { useListUsers } from "../../state/hooks";
 
+const mockNavigate = jest.fn();
+const mockRaffle = jest.fn();
 jest.mock("../../state/hooks", () => ({
   useListUsers: jest.fn(),
+  useRaffle: () => mockRaffle,
 }));
 
-const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
   useNavigate: () => mockNavigate,
 }));
@@ -86,5 +88,6 @@ describe("Footer test suite > has users", () => {
     // Assert
     expect(mockNavigate).toHaveBeenCalledWith("/sorteio");
     expect(mockNavigate).toHaveBeenCalledTimes(1);
+    expect(mockRaffle).toHaveBeenCalledTimes(1);
   });
 });
