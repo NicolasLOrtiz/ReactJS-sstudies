@@ -1,1 +1,3 @@
-export { default as Home } from "./Home";
+export { Home } from "./Home";
+export { Raffle } from "./Raffle";
+export { Setup } from "./Setup";

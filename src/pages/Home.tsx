@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo, useRef, useState } from "react";
+import React, { memo, useCallback, useMemo, useRef } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -33,13 +33,16 @@ const DeleteButton = () => (
   <Button danger shape="circle" icon={<CloseOutlined />} />
 );
 
-const Home = () => {
+export const Home = () => {
   const gridRef = useRef<AgGridReact<ICar>>(null);
-  const [rowData, setRowData] = useState<ICar[]>([
-    { make: "Toyota", model: "Celica", price: 35000 },
-    { make: "Ford", model: "Mondeo", price: 32000 },
-    { make: "Porsche", model: "Boxster", price: 72000 },
-  ]);
+  const rowData = useMemo(
+    () => [
+      { make: "Toyota", model: "Celica", price: 35000 },
+      { make: "Ford", model: "Mondeo", price: 32000 },
+      { make: "Porsche", model: "Boxster", price: 72000 },
+    ],
+    []
+  );
 
   const columnDefs = useMemo<ColDef[]>(
     () => [
@@ -76,10 +79,6 @@ const Home = () => {
     console.log("cellClicked", typeof event);
   }, []);
 
-  const buttonListener = useCallback(() => {
-    // gridRef.current.api.deselectAll();
-  }, []);
-
   return (
     <Space
       direction="vertical"
@@ -112,5 +111,3 @@ const Home = () => {
     </Space>
   );
 };
-
-export default Home;

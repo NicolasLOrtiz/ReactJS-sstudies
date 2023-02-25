@@ -11,7 +11,7 @@ const Footer = () => {
   const handleSort = useCallback(() => {
     raffle();
     navigate("/sorteio");
-  }, [navigate]);
+  }, [navigate, raffle]);
 
   return (
     <footer role={`contentinfo`}>
