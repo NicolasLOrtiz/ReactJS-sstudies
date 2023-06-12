@@ -1,9 +1,12 @@
 import withLoader, { IElement } from "./withLoader";
-import withHover from "./withHover";
+import withHover from "./useHover";
 
-const DogImages: IElement = ({ data, hovering, ...props }) => {
+const DogImages: IElement = ({ data, ...props }) => {
+  const [ref, hovering] = withHover();
+
   return (
-    <div {...props}>
+    // @ts-ignore
+    <div {...props} ref={ref}>
       {hovering && <div id="hover">Hovering!</div>}
       <div id="list">
         {data.message.map((dog, index) => (
@@ -14,6 +17,7 @@ const DogImages: IElement = ({ data, hovering, ...props }) => {
   );
 };
 
-export default withHover(
-  withLoader(DogImages, "https://dog.ceo/api/breed/labrador/images/random/6")
+export default withLoader(
+  DogImages,
+  "https://dog.ceo/api/breed/labrador/images/random/6"
 );
