@@ -9,7 +9,7 @@ const DogImages: IElement = ({ data, ...props }) => {
     <div {...props} ref={ref}>
       {hovering && <div id="hover">Hovering!</div>}
       <div id="list">
-        {data.message.map((dog, index) => (
+        {data?.message.map((dog, index) => (
           <img src={dog} alt="Dog" key={index} />
         ))}
       </div>

@@ -5,8 +5,10 @@ export interface IDataDog {
 }
 
 type IWithLoader = JSX.IntrinsicAttributes & {
-  data: IDataDog;
-  hovering: boolean;
+  data?: IDataDog;
+  hovering?: boolean;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
 export type IElement = FC<IWithLoader>;
